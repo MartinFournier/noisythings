@@ -11,6 +11,8 @@ namespace NoisyWizardry.Controllers
 {
     public class HomeController : Controller
     {
+        Random rnd = new Random();
+
         public ActionResult Index()
         {
             return View();
@@ -48,5 +50,43 @@ namespace NoisyWizardry.Controllers
             return ToJson(w, n);
         }
 
+        public ActionResult Merge()
+        {
+            var n1 = new MusicNote(Notes.C, 4);
+            var n2 = new MusicNote(Notes.E, 2);
+            WaveGenerator w1 = WaveGenerator.GetGenerator(WaveTypes.Sawtooth, n1.Frequency, new TimeSpan(0, 0, 0, 0, 50));
+            WaveGenerator w2 = WaveGenerator.GetGenerator(WaveTypes.Sawtooth, n2.Frequency, new TimeSpan(0, 0, 0, 0, 500));
+            w1.AppendWave(w2);
+            return ToJson(w1);
+        }
+
+        public ActionResult Random()
+        {
+            var nbOfNotes = rnd.Next(0, 100);
+            var master = GetRandomGenerator(GetRandomNote());
+            for (var i = 1; i < nbOfNotes; i++)
+            {
+                var newNote = GetRandomGenerator(GetRandomNote());
+                master.AppendWave(newNote);
+            }
+            return ToJson(master);
+        }
+
+        private MusicNote GetRandomNote()
+        {
+            var note = rnd.Next(0, 6);
+            var octave = rnd.Next(3, 5);
+            var intonation = rnd.Next(-1, 1);
+            var randomNote = new MusicNote((Notes)note, octave, (Intonations)intonation);
+            return randomNote;
+        }
+
+        private WaveGenerator GetRandomGenerator(MusicNote note)
+        {
+            var duration = rnd.Next(25, 250);
+            var waveType = rnd.Next(0, 3);
+            var wave = WaveGenerator.GetGenerator((WaveTypes)waveType, note.Frequency, new TimeSpan(0,0,0,0, duration);
+            return wave;
+        }
     }
 }

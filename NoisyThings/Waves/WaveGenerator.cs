@@ -18,8 +18,6 @@ namespace NoisyThings.Waves
         protected uint NumberOfSamples;
         protected double Angle;
 
-
-
         public WaveGenerator(double frequency, TimeSpan duration)
         {
             Header = new WaveHeader();
@@ -36,6 +34,19 @@ namespace NoisyThings.Waves
             // The "angle" used in the function, adjusted for the number of channels and sample rate.
             // This value is like the period of the wave.
             Angle = (Math.PI * 2 * frequency) / (Format.SamplesPerSecond * Format.Channels);
+        }
+
+        public void AppendWave(WaveGenerator otherWave)
+        {
+            short[] arr1 = Data.SamplesData;
+            short[] arr2 = otherWave.Data.SamplesData;
+            var currLen = arr1.Length;
+            var otherLen = arr2.Length;
+            var newArr = new short[currLen+otherLen];
+            Array.Copy(arr1, 0, newArr, 0, currLen);
+            Array.Copy(arr2, 0, newArr, currLen, otherLen);
+            Data.SamplesData = newArr;
+            CalculateChunkSize();
         }
 
         public static WaveGenerator GetGenerator(WaveTypes type, double frequency, TimeSpan duration)

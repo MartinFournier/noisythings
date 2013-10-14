@@ -45,8 +45,14 @@
     }
 
     noise.init = function() {    
-        $("#go").click(function () {
+        $("#generate-wave").click(function () {
             playStuff();
+        });
+        $("#merge-stuff").click(function() {
+            playUrl("/home/merge?");
+        });
+        $("#random").click(function() {
+            playUrl("/home/random?");
         });
         $("body").keyup(function (event) {
             if (event.keyCode == '13') {
