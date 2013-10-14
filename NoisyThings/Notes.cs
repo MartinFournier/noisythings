@@ -72,7 +72,7 @@ namespace NoisyThings
             else
             {
                 diffSteps = -((7 - (int)Note) * 2);
-                if (Note <= Notes.E)
+                if (Note < Notes.E)
                 {
                     diffSteps--;
                 }
