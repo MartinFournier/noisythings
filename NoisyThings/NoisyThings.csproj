@@ -40,15 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Waves\NoiseWaveGenerator.cs" />
+    <Compile Include="Waves\SawtoothWaveGenerator.cs" />
+    <Compile Include="Waves\SquareWaveGenerator.cs" />
     <Compile Include="Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SineWaveGenerator.cs" />
-    <Compile Include="WaveDataChunk.cs" />
-    <Compile Include="WaveExampleType.cs" />
-    <Compile Include="WaveFormatChunk.cs" />
-    <Compile Include="WaveGenerator.cs" />
-    <Compile Include="WaveHeader.cs" />
+    <Compile Include="Waves\SineWaveGenerator.cs" />
+    <Compile Include="Waves\Format\WaveDataChunk.cs" />
+    <Compile Include="Waves\Format\WaveFormatChunk.cs" />
+    <Compile Include="Waves\WaveGenerator.cs" />
+    <Compile Include="Waves\Format\WaveHeader.cs" />
+    <Compile Include="Waves\WaveTypes.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

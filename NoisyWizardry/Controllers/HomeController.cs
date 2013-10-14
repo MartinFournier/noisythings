@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NoisyThings;
+using NoisyThings.Waves;
+using System.Web.Script.Serialization;
 
 namespace NoisyWizardry.Controllers
 {
@@ -14,23 +16,36 @@ namespace NoisyWizardry.Controllers
             return View();
         }
 
-
-        public ActionResult Audio(double freq)
+        public ActionResult ToJson(WaveGenerator w, MusicNote n = null)
         {
-            WaveGenerator wave = new SineWaveGenerator(freq);
-            var buffer = wave.ToMemoryStream().GetBuffer();
-            return File(buffer, "audio/wav");
+            var serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = Int32.MaxValue;
+
+            var note = "";
+            if (n != null) {
+                note = n.ToString();
+            }
+
+            var resultData = new { audio = w.ToBase64(), d =  note};
+            var result = new ContentResult
+            {
+                Content = serializer.Serialize(resultData),
+                ContentType = "application/json"
+            };
+            return result;
         }
 
-        public ActionResult Note(Notes note, int octave, Intonations intonation)
+        public ActionResult Audio(double freq, WaveTypes wave, int ms = 200)
+        {
+            WaveGenerator w = WaveGenerator.GetGenerator(wave, freq, new TimeSpan(0, 0, 0, 0, ms));
+            return ToJson(w);
+        }
+
+        public ActionResult Note(Notes note, int octave, Intonations intonation, WaveTypes wave, int ms = 200)
         {
             var n = new MusicNote(note, octave, intonation);
-            WaveGenerator wave = new SineWaveGenerator(n.Frequency);
-            var buffer = wave.ToMemoryStream().GetBuffer();
-            var base64 = Convert.ToBase64String(buffer);
-            var audioStr = "data:audio/wav;base64," + base64;
-            return Json(new { note = n, audio =  audioStr, d = n.ToString() }, JsonRequestBehavior.AllowGet);
-            //return File(buffer, "audio/wav");
+            WaveGenerator w = WaveGenerator.GetGenerator(wave, n.Frequency, new TimeSpan(0,0,0, 0, ms));
+            return ToJson(w, n);
         }
 
     }

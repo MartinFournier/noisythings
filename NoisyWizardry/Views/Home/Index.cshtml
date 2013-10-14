@@ -1,165 +1,34 @@
 ﻿@{
     ViewBag.Title = "NOISY STUFF";
 }
-<h2>
-    Index</h2>
-<input id="freq" value="440" />
-<button id="go">
-    Test</button>
+<div class="options">
+    <div>
+        <label for="freq">
+            Frequency (Hz):
+        </label>
+        <input id="freq" value="440" />
+    </div>
+    <div>
+        <label for="duration">
+            Duration (ms):
+        </label>
+        <input id="duration" value="200" />
+    </div>
+    <div>
+        <label for="wavetype">
+            Wave type:
+        </label>
+        <select id="wavetype">
+            <option value="0">Sine</option>
+            <option value="1">Square</option>
+            <option value="2">Sawtooth</option>
+            <option value="3">Noise</option>
+        </select>
+    </div>
+    <button id="go">
+        Test</button>
+</div>
 <div id="container">
-    @*<audio src="/home/audio" controls></audio>*@
 </div>
 <div id="keyboard">
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>
-    // then do it
-    function playStuff() {
-        var url = "/home/audio?freq=" + $("#freq").val();
-        playUrl(url);
-    }
-
-    function playUrl(url) {
-        $.get(url).success(function (data) {
-            $('audio').each(function () {
-                $(this).get(0).pause();
-                $(this).attr('src', '');
-            });
-
-            var m = '<audio controls preload="auto" src="' + data.audio + '">';
-            $('#container').empty().append(m);
-            $("audio")[0].play();
-            console.log(data.d);
-        });
-
-      
-    }
-
-    $("#go").click(function () {
-        playStuff();
-    });
-    $("body").keyup(function (event) {
-        if (event.keyCode == '13') {
-            playStuff();
-        }
-    });
-
-    function getNote(i) {
-        switch (i) {
-            case 0:
-                return 'A';
-                break;
-            case 1:
-                return 'B';
-                break;
-            case 2:
-                return 'C';
-                break;
-            case 3:
-                return 'D';
-                break;
-            case 4:
-                return 'E';
-                break;
-            case 5:
-                return 'F';
-                break;
-            case 6:
-                return 'G';
-                break;
-            default:
-                return '!';
-                break;
-        }
-    }
-
-    function getIntonation(i) {
-        switch (i) {
-            case -1:
-                return 'b';
-                break;
-            case 0:
-                return '';
-                break;
-            case 1:
-                return '#';
-                break;
-        }
-    }
-
-    for (var octave = 1; octave <= 8; octave++) { //octaves;
-        for (var note = 0; note <= 6; note++) { //notes;
-            for (var intonation = -1; intonation < 1; intonation++) {
-                var skip = (intonation === -1 && (note === 5 || note === 2))
-                if (!skip) {
-                    var markup = "<button data-note='" + note + "' data-octave='" + octave + "' data-intonation='" + intonation + "' class='note-button'>"
-                    markup += getNote(note) + octave + getIntonation(intonation) + "</button>";
-                    if (intonation === -1) {
-                        markup = '<div class="black-keys">' + markup + '</div>';
-                    }
-                    $("#keyboard").append(markup);
-                }
-            }
-        }
-    }
-
-    $(".note-button").click(function () {
-        var $this = $(this);
-        var note = $this.data('note');
-        var octave = $this.data('octave');
-        var intonation = $this.data('intonation');
-        var url = "/home/note?note=" + note + "&octave=" + octave + "&intonation=" + intonation;
-        playUrl(url);
-    });
-</script>
-<style>
-    .black-keys
-    {
-        width: 0;
-        height: 0;
-        position: relative;
-        display: inline;
-    }
-    
-    #container
-    {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-    }
-    
-    #keyboard
-    {
-        position: relative;
-        margin-top: 35px;
-margin-left: 20px;
-    }
-    
-    .note-button
-    {
-        height: 80px;
-        width: 40px;
-        background-color: #fff;
-        border: 2px solid #555;
-        margin: 1px;
-        width: 28px;
-        font-size: 12px;
-        word-wrap: break-word;
-        margin-bottom: 40px;
-    }
-    
-    .note-button[data-intonation=0]
-    {
-    }
-    
-    .note-button[data-intonation="-1"]
-    {
-        background-color: #333;
-        color: #CCC;
-        position: absolute;
-        left: -10px;
-        top: -53px;
-        width: 20px;
-        font-size: 10px;
-    }
-</style>

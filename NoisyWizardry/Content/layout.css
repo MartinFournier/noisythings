@@ -1,0 +1,75 @@
+body 
+{
+    font-family: Helvetica;
+}
+
+#container
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#keyboard
+{
+    position: relative;
+    margin-top: 35px;
+    margin-left: 20px;
+}
+
+.black-keys
+{
+    width: 0;
+    height: 0;
+    position: relative;
+    display: inline;
+}
+
+.black-keys .note-button
+{
+    background-color: #333;
+    color: #CCC;
+    position: absolute;
+    left: -10px;
+    top: -53px;
+    width: 20px;
+    font-size: 10px;
+}
+
+
+.note-button
+{
+    height: 80px;
+    width: 40px;
+    background-color: #fff;
+    border: 2px solid #555;
+    margin: 1px;
+    width: 28px;
+    font-size: 12px;
+    word-wrap: break-word;
+    margin-bottom: 40px;
+}
+
+.options label
+{
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+}
+
+.options input
+{
+    width: 100px;
+    text-align: center;
+}
+.options select
+{
+    width: 104px;
+}
+.options button
+{
+    width: 200px;
+    height: 30px;
+    margin: 10px 60px;
+    font-size: 18px;
+}

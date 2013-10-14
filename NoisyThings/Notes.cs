@@ -40,21 +40,12 @@ namespace NoisyThings
         private int StepsFromBase()
         {
             var octaveDiff = (Octave - baseOctave);
-            //if (octaveDiff > 0)
-            //{
-            //    octaveDiff--;
-            //}
-            //else if (octaveDiff < 0)
-            //{
-            //    octaveDiff++;
-            //}
             var octaveDifferenceSteps = 0;
             if (octaveDiff < 0) {
                 octaveDifferenceSteps  = (octaveDiff+1) * 6 * 2;
             }else {
                 octaveDifferenceSteps  = (octaveDiff) * 6 * 2;
             }
-            
            
             var diffSteps = 0;
             if (Octave >= baseOctave)
