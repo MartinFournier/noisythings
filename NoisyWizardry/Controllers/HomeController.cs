@@ -62,7 +62,7 @@ namespace NoisyWizardry.Controllers
 
         public ActionResult Random()
         {
-            var nbOfNotes = rnd.Next(0, 100);
+            var nbOfNotes = rnd.Next(25, 250);
             var master = GetRandomGenerator(GetRandomNote());
             for (var i = 1; i < nbOfNotes; i++)
             {
@@ -85,7 +85,7 @@ namespace NoisyWizardry.Controllers
         {
             var duration = rnd.Next(25, 250);
             var waveType = rnd.Next(0, 3);
-            var wave = WaveGenerator.GetGenerator((WaveTypes)waveType, note.Frequency, new TimeSpan(0,0,0,0, duration);
+            var wave = WaveGenerator.GetGenerator((WaveTypes)waveType, note.Frequency, new TimeSpan(0,0,0,0, duration));
             return wave;
         }
     }
