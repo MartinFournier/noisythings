@@ -27,7 +27,10 @@ namespace NoisyWizardry.Controllers
             var n = new MusicNote(note, octave, intonation);
             WaveGenerator wave = new SineWaveGenerator(n.Frequency);
             var buffer = wave.ToMemoryStream().GetBuffer();
-            return File(buffer, "audio/wav");
+            var base64 = Convert.ToBase64String(buffer);
+            var audioStr = "data:audio/wav;base64," + base64;
+            return Json(new { note = n, audio =  audioStr, d = n.ToString() }, JsonRequestBehavior.AllowGet);
+            //return File(buffer, "audio/wav");
         }
 
     }

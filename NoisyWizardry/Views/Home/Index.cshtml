@@ -13,20 +13,26 @@
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
+    // then do it
     function playStuff() {
         var url = "/home/audio?freq=" + $("#freq").val();
         playUrl(url);
     }
 
     function playUrl(url) {
-        $('audio').each(function () {
-            $(this).get(0).pause();
-            $(this).attr('src', '');
+        $.get(url).success(function (data) {
+            $('audio').each(function () {
+                $(this).get(0).pause();
+                $(this).attr('src', '');
+            });
+
+            var m = '<audio controls preload="auto" src="' + data.audio + '">';
+            $('#container').empty().append(m);
+            $("audio")[0].play();
+            console.log(data.d);
         });
 
-        var m = '<audio controls preload="auto" src="' + url + '">';
-        $('#container').empty().append(m);
-        $("audio")[0].play();
+      
     }
 
     $("#go").click(function () {
@@ -103,7 +109,6 @@
         var octave = $this.data('octave');
         var intonation = $this.data('intonation');
         var url = "/home/note?note=" + note + "&octave=" + octave + "&intonation=" + intonation;
-        console.log(url);
         playUrl(url);
     });
 </script>

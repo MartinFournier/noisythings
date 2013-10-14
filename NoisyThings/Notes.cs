@@ -18,7 +18,7 @@ namespace NoisyThings
 
     public enum Intonations
     {
-        Flat = 1,
+        Flat = -1,
         None = 0,
         Sharp = 1,
     }
@@ -72,13 +72,13 @@ namespace NoisyThings
             else
             {
                 diffSteps = -((7 - (int)Note) * 2);
-                if (Note < Notes.E)
+                if (Note <= Notes.E)
                 {
-                    diffSteps--;
+                    diffSteps++;
                 }
                 if (Note <= Notes.B)
                 {
-                    diffSteps--;
+                    diffSteps++;
                 }
             }
 
@@ -101,6 +101,27 @@ namespace NoisyThings
             } 
         }
 
+
+        public override string ToString()
+        {
+            var friendlyOctave = Octave;
+            
+            if (Note > Notes.B)
+            {
+                friendlyOctave++;
+            }
+            var s = Note.ToString() + friendlyOctave;
+            if ((int)Intonation == (int)Intonations.Flat)
+            {
+                s += "b";
+            }
+            else if ((int)Intonation == (int)Intonations.Sharp)
+            {
+                s += "#";
+            }
+            s += " : " + Frequency + " Hz";
+            return s;
+        }
 
         public MusicNote(Notes note, int octave, Intonations intonation = Intonations.None)
         {
