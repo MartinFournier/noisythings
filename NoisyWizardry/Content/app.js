@@ -54,6 +54,9 @@
         $("#random").click(function() {
             playUrl("/home/random?");
         });
+         $("#random-with-seed").click(function() {
+            playUrl("/home/random?seed=" + $("#seed").val());
+        });
         $("body").keyup(function (event) {
             if (event.keyCode == '13') {
                 playStuff();

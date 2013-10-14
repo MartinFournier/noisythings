@@ -10,6 +10,7 @@ namespace NoisyThings.Waves
         Sine = 0,
         Square = 1,
         Sawtooth = 2,
-        Noise = 3
+        Noise = 3,
+        Silence = 4
     }
 }

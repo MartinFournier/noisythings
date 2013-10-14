@@ -61,6 +61,8 @@ namespace NoisyThings.Waves
                     return new SquareWaveGenerator(frequency, duration);
                 case WaveTypes.Noise:
                     return new NoiseWaveGenerator(frequency, duration);
+                case WaveTypes.Silence:
+                    return new SilenceWaveGenerator(duration);
             }
             return null;
         }

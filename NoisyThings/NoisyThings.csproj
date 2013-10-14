@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tempo.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Waves\NoiseWaveGenerator.cs" />
     <Compile Include="Waves\SawtoothWaveGenerator.cs" />
+    <Compile Include="Waves\SilenceWaveGenerator.cs" />
     <Compile Include="Waves\SquareWaveGenerator.cs" />
     <Compile Include="Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

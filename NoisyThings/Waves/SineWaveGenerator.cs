@@ -12,11 +12,7 @@ namespace NoisyThings.Waves
         {
             for (uint i = 0; i < NumberOfSamples - 1; i++)
             {
-                // Fill with a simple sine wave at max amplitude
-                for (int channel = 0; channel < Format.Channels; channel++)
-                {
-                    Data.SamplesData[i + channel] = Convert.ToInt16(Amplitude * Math.Sin(Angle * i));
-                }
+                    Data.SamplesData[i] = Convert.ToInt16(Amplitude *  Math.Sin(Angle * i));
             }
 
             CalculateChunkSize();
